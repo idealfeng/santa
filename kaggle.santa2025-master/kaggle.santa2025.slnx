@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../BeCarefulWithStruct/BeCarefulWithStruct.csproj" Id="b5443528-3a23-44ea-adb7-66a7d986fa78" />
+  <Project Path="../kaggle.santa2025.v2/kaggle.santa2025.v2.csproj" Id="172d356f-509c-4297-ba3d-da593499abec" />
+  <Project Path="kaggle.santa2025.csproj" />
+</Solution>

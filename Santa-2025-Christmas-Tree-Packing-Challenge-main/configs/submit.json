@@ -1,0 +1,24 @@
+{
+  "make_submit": {
+    "nmax": 200,
+    "overlap_mode": "kaggle",
+    "submissions_dir": "submissions",
+    "name": "baseline"
+  },
+  "generate": {
+    "overlap_mode": "kaggle",
+    "lattice": {
+      "pattern": "hex",
+      "margin": 0.02,
+      "rotate_mode": "constant",
+      "rotations": [0, 15, 30]
+    },
+    "sa": {
+      "nmax": 50,
+      "batch": 64,
+      "steps": 400,
+      "proposal": "random",
+      "neighborhood": false
+    }
+  }
+}

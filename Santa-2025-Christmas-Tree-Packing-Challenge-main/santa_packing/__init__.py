@@ -1,0 +1,1 @@
+"""Santa 2025 Christmas Tree Packing Challenge package."""

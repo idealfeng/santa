@@ -1,0 +1,24 @@
+{
+  "recipes": [
+    {
+      "name": "lattice_hex_checker",
+      "args": "--sa-nmax 0 --lattice-pattern hex --lattice-rotate-mode checker --lattice-rotations 0,15,30 --lattice-post-nmax 200 --lattice-post-steps 30"
+    },
+    {
+      "name": "lattice_square_checker",
+      "args": "--sa-nmax 0 --lattice-pattern square --lattice-rotate-mode checker --lattice-rotations 0,15,30 --lattice-post-nmax 200 --lattice-post-steps 30"
+    },
+    {
+      "name": "sa_small_mixed",
+      "args": "--sa-nmax 30 --sa-steps 400 --sa-batch 64 --sa-proposal mixed --sa-neighborhood --sa-objective packing"
+    },
+    {
+      "name": "sa_prefix",
+      "args": "--sa-nmax 50 --sa-steps 400 --sa-batch 64 --sa-proposal mixed --sa-neighborhood --sa-objective prefix --sa-swap-prob 0.05"
+    },
+    {
+      "name": "ga_hc_small",
+      "args": "--sa-nmax 0 --ga-nmax 15 --ga-pop 64 --ga-gens 30 --ga-hc-passes 1 --hc-nmax 15 --hc-passes 2"
+    }
+  ]
+}

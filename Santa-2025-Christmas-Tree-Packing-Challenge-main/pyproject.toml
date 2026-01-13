@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "santa-packing"
+version = "0.0.0"
+description = "Santa 2025 Christmas Tree Packing Challenge solver"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.scripts]
+santa-solve = "santa_packing.workflow:cli_main"
+
+[project.optional-dependencies]
+train = ["jax[cpu]", "matplotlib"]
+notebooks = ["ipykernel"]
+dev = ["ruff", "pre-commit", "pytest"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["santa_packing*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = ["notebooks/"]
+
+[tool.ruff.lint]
+# Match Ruff's default pycodestyle selection (E4/E7/E9) + Pyflakes (F),
+# plus import sorting (I) to replace isort.
+select = ["E4", "E7", "E9", "F", "I"]

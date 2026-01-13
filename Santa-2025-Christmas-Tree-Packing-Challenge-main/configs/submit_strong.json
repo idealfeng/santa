@@ -1,0 +1,39 @@
+{
+  "make_submit": {
+    "nmax": 200,
+    "overlap_mode": "kaggle",
+    "submissions_dir": "submissions",
+    "name": "strong"
+  },
+  "generate": {
+    "overlap_mode": "kaggle",
+    "mother_prefix": true,
+    "mother_reorder": "radial",
+    "lattice": {
+      "pattern": "hex",
+      "margin": 0.02,
+      "rotate_mode": "constant",
+      "rotations": [0, 15, 30]
+    },
+    "sa": {
+      "nmax": 0
+    },
+    "refine": {
+      "nmin": 200,
+      "batch": 64,
+      "steps": 6000,
+      "proposal": "mixed",
+      "neighborhood": true,
+      "objective": "packing",
+      "trans_sigma": 0.1,
+      "rot_sigma": 8.0,
+      "rot_prob": 0.15,
+      "rot_prob_end": 0.05,
+      "push_prob": 0.15,
+      "compact_prob": 0.12,
+      "compact_prob_end": 0.25,
+      "teleport_prob": 0.05,
+      "teleport_prob_end": 0.01
+    }
+  }
+}

@@ -1,0 +1,71 @@
+# Build artifacts
+/build/
+/bin/
+/build_manual/
+/src/
+/.cache/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Experiments / runs / local outputs
+/runs/
+/outputs/
+/artifacts/
+/checkpoints/
+/models/
+/logs/
+/tmp/
+/score_output*.txt
+
+# Generated datasets / models
+*.npz
+*.npy
+*.csv
+*.tsv
+*.parquet
+*.pkl
+*.joblib
+*.log
+
+# Kaggle submissions (usually generated)
+/submission*.csv
+/submissions/
+
+# Kaggle API token (never commit)
+kaggle.json
+.kaggle/
+
+# PDFs / docs (large assets)
+/Desafio Kaggle Santa 2025.pdf
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtualenvs / env files
+.env
+.env.*
+.venv/
+venv/
+env/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,10 @@
+{
+  "sweep_ensemble": {
+    "nmax": 200,
+    "seeds": "1",
+    "jobs": 1,
+    "overlap_check": "selected",
+    "recipes_json": "scripts/submission/portfolios/mixed.json"
+  }
+}
+
