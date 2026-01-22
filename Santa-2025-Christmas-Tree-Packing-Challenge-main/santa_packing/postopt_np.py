@@ -1174,6 +1174,7 @@ def large_neighborhood_search(
     candidates: int = 64,
     angle_samples: int = 8,
     pad_scale: float = 2.0,
+    recreate_topk: int = 1,
     group_moves: int = 0,
     group_size: int = 3,
     group_trans_sigma: float = 0.05,
@@ -1209,6 +1210,10 @@ def large_neighborhood_search(
         candidates: Candidate center samples used during reinsert.
         angle_samples: Candidate angle samples per reinsert.
         pad_scale: Padding factor applied to sampling bounds.
+        recreate_topk: When reinserting a ruined tree, randomly pick among the
+            top-K best (lowest-score) placements instead of always choosing the
+            single best. This increases exploration at the cost of slightly more
+            variance (default: 1 == greedy).
         group_moves: Number of optional group-rotation moves per pass.
         group_size: Group size for group moves.
         group_trans_sigma: Translation sigma for group moves.
@@ -1226,6 +1231,9 @@ def large_neighborhood_search(
         return shift_poses_to_origin(points, poses)
     if destroy_k <= 0:
         destroy_k = 1
+    recreate_topk = int(recreate_topk)
+    if recreate_topk <= 0:
+        recreate_topk = 1
 
     destroy_mode = str(destroy_mode)
     if destroy_mode not in {"mixed", "boundary", "random", "cluster", "alns"}:
@@ -1369,6 +1377,7 @@ def large_neighborhood_search(
                 best_poly: np.ndarray | None = None
                 best_bbox: np.ndarray | None = None
                 best_score_local = float("inf")
+                topk: list[tuple[float, np.ndarray, np.ndarray, np.ndarray]] | None = [] if recreate_topk > 1 else None
 
                 for cxy in centers:
                     for ang in angles:
@@ -1383,11 +1392,31 @@ def large_neighborhood_search(
                         new_max_x = max(max_x, float(cand_bbox[2]))
                         new_max_y = max(max_y, float(cand_bbox[3]))
                         s = max(new_max_x - new_min_x, new_max_y - new_min_y)
-                        if s < best_score_local:
-                            best_score_local = float(s)
-                            best_pose = cand_pose
-                            best_poly = cand_poly
-                            best_bbox = cand_bbox
+                        s = float(s)
+                        if topk is not None:
+                            topk.append((s, cand_pose, cand_poly, cand_bbox))
+                            topk.sort(key=lambda t: t[0])
+                            if len(topk) > recreate_topk:
+                                topk.pop()
+                            if topk[0][0] < best_score_local:
+                                best_score_local = float(topk[0][0])
+                                best_pose = topk[0][1]
+                                best_poly = topk[0][2]
+                                best_bbox = topk[0][3]
+                        else:
+                            if s < best_score_local:
+                                best_score_local = s
+                                best_pose = cand_pose
+                                best_poly = cand_poly
+                                best_bbox = cand_bbox
+
+                if topk is not None and topk:
+                    # Pick randomly among top-K to increase exploration.
+                    chosen = topk[int(rng.integers(0, len(topk)))]
+                    best_score_local = float(chosen[0])
+                    best_pose = chosen[1]
+                    best_poly = chosen[2]
+                    best_bbox = chosen[3]
 
                 if best_pose is None or best_poly is None or best_bbox is None:
                     success = False
